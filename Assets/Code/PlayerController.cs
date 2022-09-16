@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
 #endif
         _rigidbody = GetComponent<Rigidbody>(); // Using GetComponent is expensive. Always do it in start and chache it when you can.
         Cursor.lockState = CursorLockMode.Locked; // Hides the mouse and locks it to the center of the screen.
+        camTrans=GameObject.FindGameObjectWithTag("MainCamera").transform; //gets transform of camera 
     }
 
     void FixedUpdate()
