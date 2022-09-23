@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
         lookSpeedX *= .65f; //WebGL has a bug where the mouse has higher sensitibity. This compensates for the change. 
         lookSpeedY *= .65f; //.65 is a rough guess based on testing in firefox.
 #endif
+        feetTrans = transform;
         _rigidbody = GetComponent<Rigidbody>(); // Using GetComponent is expensive. Always do it in start and chache it when you can.
         Cursor.lockState = CursorLockMode.Locked; // Hides the mouse and locks it to the center of the screen.
         camTrans=GameObject.FindGameObjectWithTag("MainCamera").transform; //gets transform of
@@ -52,7 +53,7 @@ public class PlayerController : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -90, 90); //Keeps up/down head rotation realistic
         camTrans.localEulerAngles = new Vector3(yRotation, 0, 0);
         transform.eulerAngles = new Vector3(0, xRotation, 0);
-
+        print(grounded);
         if (grounded && Input.GetButtonDown("Jump")) //if the player is on the ground and press Spacebar
         {
             _rigidbody.AddForce(new Vector3(0, jumpForce, 0)); // Add a force jumpForce in the Y direction
