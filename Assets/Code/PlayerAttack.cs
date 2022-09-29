@@ -11,7 +11,7 @@ public class PlayerAttack : MonoBehaviour
     public Transform camTrans;
     public Image reticle;
     private bool reticleTarget = false;
-    public bool gunActive= true;
+    public static bool gunActive= true;
 
 
     private void Start() {
@@ -56,19 +56,12 @@ public class PlayerAttack : MonoBehaviour
             if (Physics.Raycast(camTrans.position, camTrans.forward, out hit, raycastDist) &&
                 (hit.collider.CompareTag("Target") || hit.collider.CompareTag("Monster")))
             {
-                if (!reticleTarget)
-                {
                     reticle.color = Color.red;
-                    reticleTarget = true;
-                }
-                else if (reticleTarget)
-                {
-                    reticle.color = Color.white;
-                    reticleTarget = false;
-                }
+            }else{
+                reticle.color = Color.white;
             }
         }else{
-            reticle.enabled=true;
+            reticle.enabled=false;
         }
     }
 
