@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
         lookSpeedX *= .65f; //WebGL has a bug where the mouse has higher sensitibity. This compensates for the change. 
         lookSpeedY *= .65f; //.65 is a rough guess based on testing in firefox.
 #endif
+        transform.Find("feet").GetComponent<Renderer>().enabled=false;
         feetTrans = transform.Find("feet").transform;
         _rigidbody = GetComponent<Rigidbody>(); // Using GetComponent is expensive. Always do it in start and chache it when you can.
         Cursor.lockState = CursorLockMode.Locked; // Hides the mouse and locks it to the center of the screen.
