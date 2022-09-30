@@ -171,7 +171,7 @@ public class PlayerAttack : MonoBehaviour
                 }
                 break;
             case "Monster":
-                coins=0;
+                
                 hp_hit_count += 1;
                 print("hit a zombie");
                 print(hp_hit_count);
@@ -182,6 +182,7 @@ public class PlayerAttack : MonoBehaviour
                 if (hp_hit_count == 4)
                 {
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                    coins=0;
                 }
                 if(SceneManager.GetActiveScene().name=="L1"){
                     gunActive=false;

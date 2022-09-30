@@ -7737,7 +7737,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d20dc634946974626af432999aa44905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBarImage: {fileID: 0}
+  healthBarImage: {fileID: 2108607207}
   player: {fileID: 642578175}
 --- !u!1 &2119951265
 GameObject:
