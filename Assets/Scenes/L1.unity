@@ -19217,9 +19217,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1377757758}
     - target: {fileID: 6682545100442705750, guid: 527dfe42e4b188d41bb992294a731548, type: 3}
+      propertyPath: gun_arm
+      value: 
+      objectReference: {fileID: 8300000, guid: 863e86db4c48d43199d85fe6cd0a8d34, type: 3}
+    - target: {fileID: 6682545100442705750, guid: 527dfe42e4b188d41bb992294a731548, type: 3}
       propertyPath: reticle
       value: 
       objectReference: {fileID: 658684635}
+    - target: {fileID: 6682545100442705750, guid: 527dfe42e4b188d41bb992294a731548, type: 3}
+      propertyPath: level_up
+      value: 
+      objectReference: {fileID: 8300000, guid: 8851ead57722b4d0098666a6eacb1612, type: 3}
+    - target: {fileID: 6682545100442705750, guid: 527dfe42e4b188d41bb992294a731548, type: 3}
+      propertyPath: gun_sound
+      value: 
+      objectReference: {fileID: 8300000, guid: 2ba4826101fb74d03a497121d329b7ba, type: 3}
+    - target: {fileID: 6682545100442705750, guid: 527dfe42e4b188d41bb992294a731548, type: 3}
+      propertyPath: coin_sound
+      value: 
+      objectReference: {fileID: 8300000, guid: 09ff99ae47384464aadffe0e1fa5a8c0, type: 3}
     - target: {fileID: 6682545100442705751, guid: 527dfe42e4b188d41bb992294a731548, type: 3}
       propertyPath: m_Name
       value: Cylinder

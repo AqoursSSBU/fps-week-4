@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
         yRotation = Mathf.Clamp(yRotation, -90, 90); //Keeps up/down head rotation realistic
         camTrans.localEulerAngles = new Vector3(-yRotation, 0, 0);
         transform.eulerAngles = new Vector3(0, xRotation, 0);
-        print(grounded);
+        
         if (grounded && Input.GetButtonDown("Jump")) //if the player is on the ground and press Spacebar
         {
             _rigidbody.AddForce(new Vector3(0, jumpForce, 0)); // Add a force jumpForce in the Y direction

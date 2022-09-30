@@ -12,7 +12,7 @@ public class PlayerAttack : MonoBehaviour
     public Image reticle;
     public RawImage keyImg;
 
-    public static bool gunActive;
+    public static bool gunActive =true;
     public string nextLevelName;
     public bool key = false;
 
@@ -79,14 +79,17 @@ public class PlayerAttack : MonoBehaviour
         if(Input.GetKey(KeyCode.Escape)){
             coins=0;
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            if(SceneManager.GetActiveScene().name=="L1"){
+                gunActive=false;
+            }
         }
         before.text = coins.ToString();
-        print(coinTotal + "coins");
+        
     }
 
     private void FixedUpdate()
     {
-        print("gun " + gunActive);
+        
         if(gunActive){
             reticle.enabled=true;
             RaycastHit hit;
@@ -128,11 +131,18 @@ public class PlayerAttack : MonoBehaviour
                 key = true;
                 break;
             case "Door":
-                print("touching door");
                 audio_source.PlayOneShot(level_up);
                 if(key){
                     SceneManager.LoadScene(nextLevelName);
                     coinTotal+=coins;
+                }
+                break;
+            case "Monster":
+                print("here");
+                coins=0;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                if(SceneManager.GetActiveScene().name=="L1"){
+                    gunActive=false;
                 }
                 break;
             default:
