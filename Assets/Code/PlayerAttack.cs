@@ -15,17 +15,26 @@ public class PlayerAttack : MonoBehaviour
     public string nextLevelName;
     public bool key = false;
 
+    AudioSource audio_source;
+    public AudioClip coin_sound;
+    public AudioClip gun_sound;
+    public AudioClip level_up;
+    public AudioClip gun_arm;
 
     private void Start() {
         if(SceneManager.GetActiveScene().name=="L1"){
             gunActive=false;
         }
+
+        audio_source = GetComponent<AudioSource>();
     }
     // Update is called once per frame
     void Update()
     {
         if (Input.GetMouseButtonDown(0) && gunActive)
         {
+            audio_source.PlayOneShot(gun_sound);
+
             RaycastHit hit;
             if (Physics.Raycast(camTrans.position, camTrans.forward, out hit, raycastDist, enemyLayer))
             {
@@ -74,18 +83,22 @@ public class PlayerAttack : MonoBehaviour
         switch(other.tag)
         {
             case "Coin":
+                audio_source.PlayOneShot(coin_sound);
                 Destroy(other.gameObject);
                 break;
             case "Gun":
+                audio_source.PlayOneShot(gun_arm);
                 Destroy(other.gameObject);
                 gunActive = true;
                 break;
             case "Key":
+                audio_source.PlayOneShot(coin_sound);
                 Destroy(other.gameObject);
                 key = true;
                 break;
             case "Door":
                 print("touching door");
+                audio_source.PlayOneShot(level_up);
                 if(key){
                     SceneManager.LoadScene(nextLevelName);
                 }
