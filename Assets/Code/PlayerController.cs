@@ -60,8 +60,6 @@ public class PlayerController : MonoBehaviour
         {
             _rigidbody.AddForce(new Vector3(0, jumpForce, 0)); // Add a force jumpForce in the Y direction
         }
-        if(Input.GetKey(KeyCode.Escape)){
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
+        
     }
 }
