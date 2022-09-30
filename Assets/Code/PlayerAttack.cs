@@ -12,10 +12,9 @@ public class PlayerAttack : MonoBehaviour
     public Image reticle;
     public RawImage keyImg;
 
-    public static bool gunActive =true;
+    public static bool gunActive;
     public string nextLevelName;
     public bool key = false;
-
     AudioSource audio_source;
     public AudioClip coin_sound;
     public AudioClip gun_sound;
@@ -28,18 +27,23 @@ public class PlayerAttack : MonoBehaviour
     
     public TMPro.TextMeshProUGUI before;
     public TMPro.TextMeshProUGUI after;
-
+    public double time;
+    public double currentTime;
     public bool triggered = false;
+
+    public static string levelName;
 
     private void Start() {
         if(SceneManager.GetActiveScene().name=="L1"){
             gunActive=false;
             coinTotal=0;
+            levelName="L1";
         }
 
         audio_source = GetComponent<AudioSource>();
         coinLevelTotal = GameObject.FindGameObjectsWithTag("Coin").GetLength(0);
         after.text = coinLevelTotal.ToString();
+        
     }
     // Update is called once per frame
     void Update()
@@ -84,6 +88,14 @@ public class PlayerAttack : MonoBehaviour
             }
         }
         before.text = coins.ToString();
+        print(coinTotal+ " coins");
+        currentTime+=Time.deltaTime;
+        if(levelName!=SceneManager.GetActiveScene().name){
+            if(SceneManager.GetActiveScene().name!="L1"){
+                audio_source.PlayOneShot(level_up);
+            }
+            levelName=SceneManager.GetActiveScene().name;
+        }
         
     }
 
@@ -131,7 +143,7 @@ public class PlayerAttack : MonoBehaviour
                 key = true;
                 break;
             case "Door":
-                audio_source.PlayOneShot(level_up);
+                time=currentTime;
                 if(key){
                     SceneManager.LoadScene(nextLevelName);
                     coinTotal+=coins;

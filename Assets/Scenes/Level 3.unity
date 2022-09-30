@@ -802,6 +802,8 @@ MonoBehaviour:
   coinLevelTotal: 0
   before: {fileID: 983150330}
   after: {fileID: 940549863}
+  time: 0
+  currentTime: 0
   triggered: 0
 --- !u!54 &326054068
 Rigidbody:
