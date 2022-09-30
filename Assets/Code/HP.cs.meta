@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: d20dc634946974626af432999aa44905
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - healthBarImage: {fileID: 4441464651653767837, guid: 59ff99dfd84ef4495934b4637e35905d, type: 3}
+  - player: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
