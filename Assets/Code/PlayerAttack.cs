@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -9,12 +10,35 @@ public class PlayerAttack : MonoBehaviour
     public LayerMask enemyLayer;
     public Transform camTrans;
     public Image reticle;
-    private bool reticleTarget = false;
+    public RawImage keyImg;
 
+    public static bool gunActive;
+    public string nextLevelName;
+    public bool key = false;
+
+    public Color colorChange;
+    public int coins=0;
+    public static int coinTotal;
+    public int coinLevelTotal;
+    
+    public TMPro.TextMeshProUGUI before;
+    public TMPro.TextMeshProUGUI after;
+
+    public bool triggered = false;
+
+
+    private void Start() {
+        if(SceneManager.GetActiveScene().name=="L1"){
+            gunActive=false;
+            coinTotal=0;
+        }
+        coinLevelTotal = GameObject.FindGameObjectsWithTag("Coin").GetLength(0);
+        after.text = coinLevelTotal.ToString();
+    }
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && gunActive)
         {
             RaycastHit hit;
             if (Physics.Raycast(camTrans.position, camTrans.forward, out hit, raycastDist, enemyLayer))
@@ -28,38 +52,80 @@ public class PlayerAttack : MonoBehaviour
                 //push back
                 else if(enemy.CompareTag("Target"))
                 {
+
                     Rigidbody enemyRB = enemy.GetComponent<Rigidbody>();
                     enemyRB.AddForce(transform.forward * 800 + Vector3.up * 200);
                     enemyRB.AddTorque(new Vector3(Random.Range(-50,50), Random.Range(-50,50), Random.Range(-50,50)));
                 }
+                else{
+                    print(enemy.tag);
+                }
             }
         }
+        if (key){
+            keyImg.CrossFadeAlpha(1,0.2f,false);
+        }
+        else{
+            keyImg.CrossFadeAlpha(0.3f,0.2f,false);
+        }
+        if(Input.GetKey(KeyCode.Escape)){
+            coins=0;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        before.text = coins.ToString();
+        print(coinTotal + "coins");
     }
 
     private void FixedUpdate()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(camTrans.position, camTrans.forward, out hit, raycastDist) &&
-            (hit.collider.CompareTag("Target") || hit.collider.CompareTag("Monster")))
-        {
-            if (!reticleTarget)
+        print("gun " + gunActive);
+        if(gunActive){
+            reticle.enabled=true;
+            RaycastHit hit;
+            if (Physics.Raycast(camTrans.position, camTrans.forward, out hit, raycastDist) &&
+                (hit.collider.CompareTag("Target") || hit.collider.CompareTag("Monster")))
             {
-                reticle.color = Color.red;
-                reticleTarget = true;
-            }
-            else if (reticleTarget)
-            {
+                    reticle.color = Color.red;
+            }else{
                 reticle.color = Color.white;
-                reticleTarget = false;
             }
+        }else{
+            reticle.enabled=false;
         }
+        triggered = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Coin"))
-        {
-            Destroy(other.gameObject);
+        //prevents trigger activating twice in a row
+        if(triggered){
+            return;
         }
+        triggered = true;
+        switch(other.tag)
+        {
+            case "Coin":
+                Destroy(other.gameObject);
+                coins+=1;
+                break;
+            case "Gun":
+                Destroy(other.gameObject);
+                gunActive = true;
+                break;
+            case "Key":
+                Destroy(other.gameObject);
+                key = true;
+                break;
+            case "Door":
+                print("touching door");
+                if(key){
+                    SceneManager.LoadScene(nextLevelName);
+                    coinTotal+=coins;
+                }
+                break;
+            default:
+                break;
+        }
+
     }
 }
