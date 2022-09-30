@@ -30,6 +30,9 @@ public class PlayerAttack : MonoBehaviour
     public TMPro.TextMeshProUGUI after;
 
     public bool triggered = false;
+    public float health = 100;
+    public float maxHealth = 100;
+    public HP healthBar;
     int hp_hit_count = 0;
 
     private void Start() {
@@ -143,6 +146,10 @@ public class PlayerAttack : MonoBehaviour
                 hp_hit_count += 1;
                 print("hit a zombie");
                 print(hp_hit_count);
+
+                health -= 25;
+                healthBar.UpdateHealthBar();
+
                 if (hp_hit_count == 4)
                 {
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
