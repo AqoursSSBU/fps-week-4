@@ -10,8 +10,10 @@ public class PlayerAttack : MonoBehaviour
     public LayerMask enemyLayer;
     public Transform camTrans;
     public Image reticle;
-    private bool reticleTarget = false;
-    public static bool gunActive= true;
+
+    public static bool gunActive = true;
+    public string nextLevelName;
+    public bool key = false;
 
 
     private void Start() {
@@ -36,6 +38,7 @@ public class PlayerAttack : MonoBehaviour
                 //push back
                 else if(enemy.CompareTag("Target"))
                 {
+
                     Rigidbody enemyRB = enemy.GetComponent<Rigidbody>();
                     enemyRB.AddForce(transform.forward * 800 + Vector3.up * 200);
                     enemyRB.AddTorque(new Vector3(Random.Range(-50,50), Random.Range(-50,50), Random.Range(-50,50)));
@@ -67,14 +70,50 @@ public class PlayerAttack : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Coin"))
+
+        switch(other.tag)
         {
-            Destroy(other.gameObject);
+            case "Coin":
+                Destroy(other.gameObject);
+                break;
+            case "Gun":
+                Destroy(other.gameObject);
+                gunActive = true;
+                break;
+            case "Key":
+                Destroy(other.gameObject);
+                key = true;
+                break;
+            case "Door":
+                print("touching door");
+                if(key){
+                    SceneManager.LoadScene(nextLevelName);
+                }
+                break;
+            default:
+                break;
         }
-        if (other.CompareTag("Gun"))
-        {
-            Destroy(other.gameObject);
-            gunActive=true;
-        }
+
+        // if (other.CompareTag("Coin"))
+        // {
+        //     Destroy(other.gameObject);
+        // }
+        // if (other.CompareTag("Gun"))
+        // {
+        //     Destroy(other.gameObject);
+        //     gunActive = true;
+        // }
+        // if (other.CompareTag("Key"))
+        // {
+        //     Destroy(other.gameObject);
+        //     key = true;
+        // }
+        // if (other.CompareTag("Door"))
+        // {
+        //     SceneManager.LoadScene(nextLevelName);
+        // }
+
+         
+
     }
 }
