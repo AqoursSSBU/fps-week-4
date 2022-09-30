@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -58,6 +59,9 @@ public class PlayerController : MonoBehaviour
         if (grounded && Input.GetButtonDown("Jump")) //if the player is on the ground and press Spacebar
         {
             _rigidbody.AddForce(new Vector3(0, jumpForce, 0)); // Add a force jumpForce in the Y direction
+        }
+        if(Input.GetKey(KeyCode.Escape)){
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }

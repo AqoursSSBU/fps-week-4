@@ -8,6 +8,8 @@ TagManager:
   - Coin
   - Target
   - Gun
+  - Key
+  - Door
   layers:
   - Default
   - TransparentFX
