@@ -3,7 +3,13 @@ guid: 841030bc752810543872ae58be58e89d
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - camTrans: {instanceID: 0}
+  - reticle: {instanceID: 0}
+  - coin_sound: {fileID: 8300000, guid: 09ff99ae47384464aadffe0e1fa5a8c0, type: 3}
+  - gun_sound: {fileID: 8300000, guid: 2ba4826101fb74d03a497121d329b7ba, type: 3}
+  - level_up: {fileID: 8300000, guid: 8851ead57722b4d0098666a6eacb1612, type: 3}
+  - gun_arm: {fileID: 8300000, guid: 863e86db4c48d43199d85fe6cd0a8d34, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
