@@ -10,8 +10,9 @@ public class PlayerAttack : MonoBehaviour
     public LayerMask enemyLayer;
     public Transform camTrans;
     public Image reticle;
+    public RawImage keyImg;
 
-    public static bool gunActive = true;
+    public static bool gunActive;
     public string nextLevelName;
     public bool key = false;
 
@@ -20,13 +21,25 @@ public class PlayerAttack : MonoBehaviour
     public AudioClip gun_sound;
     public AudioClip level_up;
     public AudioClip gun_arm;
+    public Color colorChange;
+    public int coins=0;
+    public static int coinTotal;
+    public int coinLevelTotal;
+    
+    public TMPro.TextMeshProUGUI before;
+    public TMPro.TextMeshProUGUI after;
+
+    public bool triggered = false;
 
     private void Start() {
         if(SceneManager.GetActiveScene().name=="L1"){
             gunActive=false;
+            coinTotal=0;
         }
 
         audio_source = GetComponent<AudioSource>();
+        coinLevelTotal = GameObject.FindGameObjectsWithTag("Coin").GetLength(0);
+        after.text = coinLevelTotal.ToString();
     }
     // Update is called once per frame
     void Update()
@@ -57,6 +70,18 @@ public class PlayerAttack : MonoBehaviour
                 }
             }
         }
+        if (key){
+            keyImg.CrossFadeAlpha(1,0.2f,false);
+        }
+        else{
+            keyImg.CrossFadeAlpha(0.3f,0.2f,false);
+        }
+        if(Input.GetKey(KeyCode.Escape)){
+            coins=0;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        before.text = coins.ToString();
+        print(coinTotal + "coins");
     }
 
     private void FixedUpdate()
@@ -75,16 +100,22 @@ public class PlayerAttack : MonoBehaviour
         }else{
             reticle.enabled=false;
         }
+        triggered = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-
+        //prevents trigger activating twice in a row
+        if(triggered){
+            return;
+        }
+        triggered = true;
         switch(other.tag)
         {
             case "Coin":
                 audio_source.PlayOneShot(coin_sound);
                 Destroy(other.gameObject);
+                coins+=1;
                 break;
             case "Gun":
                 audio_source.PlayOneShot(gun_arm);
@@ -101,32 +132,12 @@ public class PlayerAttack : MonoBehaviour
                 audio_source.PlayOneShot(level_up);
                 if(key){
                     SceneManager.LoadScene(nextLevelName);
+                    coinTotal+=coins;
                 }
                 break;
             default:
                 break;
         }
-
-        // if (other.CompareTag("Coin"))
-        // {
-        //     Destroy(other.gameObject);
-        // }
-        // if (other.CompareTag("Gun"))
-        // {
-        //     Destroy(other.gameObject);
-        //     gunActive = true;
-        // }
-        // if (other.CompareTag("Key"))
-        // {
-        //     Destroy(other.gameObject);
-        //     key = true;
-        // }
-        // if (other.CompareTag("Door"))
-        // {
-        //     SceneManager.LoadScene(nextLevelName);
-        // }
-
-         
 
     }
 }

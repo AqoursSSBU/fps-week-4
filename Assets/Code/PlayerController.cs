@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     int moveSpeed = 5; // how fast the player moves
     float lookSpeedX = 6; // left/right mouse sensitivity
     float lookSpeedY = 3; // up/down mouse sensitivity
-    int jumpForce = 150; // ammount of force applied to create a jump
+    public int jumpForce = 150; // ammount of force applied to create a jump
 
     public Transform camTrans; // a reference to the camera transform
     float xRotation;
@@ -60,8 +60,6 @@ public class PlayerController : MonoBehaviour
         {
             _rigidbody.AddForce(new Vector3(0, jumpForce, 0)); // Add a force jumpForce in the Y direction
         }
-        if(Input.GetKey(KeyCode.Escape)){
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
+        
     }
 }
