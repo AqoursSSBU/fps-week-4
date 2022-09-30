@@ -791,7 +791,7 @@ MonoBehaviour:
   camTrans: {fileID: 1573608177}
   reticle: {fileID: 1779658469}
   keyImg: {fileID: 132417086}
-  nextLevelName: 
+  nextLevelName: EndScreen
   key: 0
   coin_sound: {fileID: 8300000, guid: 09ff99ae47384464aadffe0e1fa5a8c0, type: 3}
   gun_sound: {fileID: 8300000, guid: 2ba4826101fb74d03a497121d329b7ba, type: 3}
