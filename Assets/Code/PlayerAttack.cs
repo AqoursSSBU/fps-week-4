@@ -50,90 +50,93 @@ public class PlayerAttack : MonoBehaviour
         if(SceneManager.GetActiveScene().name == "EndScreen")
         {
             Endscreen();
-        }
+        }else{
 
-        audio_source = GetComponent<AudioSource>();
-        coinLevelTotal = GameObject.FindGameObjectsWithTag("Coin").GetLength(0);
-        after.text = coinLevelTotal.ToString();
+            audio_source = GetComponent<AudioSource>();
+            coinLevelTotal = GameObject.FindGameObjectsWithTag("Coin").GetLength(0);
+            after.text = coinLevelTotal.ToString();
+        }
         
     }
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && gunActive)
-        {
-            audio_source.PlayOneShot(gun_sound);
-
-            RaycastHit hit;
-            if (Physics.Raycast(camTrans.position, camTrans.forward, out hit, raycastDist, enemyLayer))
+        if(SceneManager.GetActiveScene().name != "EndScreen"){
+            if (Input.GetMouseButtonDown(0) && gunActive)
             {
-                GameObject enemy = hit.collider.gameObject;
-                //destroy
-                if(enemy.CompareTag("Monster"))
+                audio_source.PlayOneShot(gun_sound);
+
+                RaycastHit hit;
+                if (Physics.Raycast(camTrans.position, camTrans.forward, out hit, raycastDist, enemyLayer))
                 {
-                    Destroy(enemy);
-                }  
-                //push back
-                else if(enemy.CompareTag("Target"))
-                {
+                    GameObject enemy = hit.collider.gameObject;
+                    //destroy
+                    if(enemy.CompareTag("Monster"))
+                    {
+                        Destroy(enemy);
+                    }  
+                    //push back
+                    else if(enemy.CompareTag("Target"))
+                    {
 
-                    Rigidbody enemyRB = enemy.GetComponent<Rigidbody>();
-                    enemyRB.AddForce(transform.forward * 800 + Vector3.up * 200);
-                    enemyRB.AddTorque(new Vector3(Random.Range(-50,50), Random.Range(-50,50), Random.Range(-50,50)));
+                        Rigidbody enemyRB = enemy.GetComponent<Rigidbody>();
+                        enemyRB.AddForce(transform.forward * 800 + Vector3.up * 200);
+                        enemyRB.AddTorque(new Vector3(Random.Range(-50,50), Random.Range(-50,50), Random.Range(-50,50)));
+                    }
+                    else{
+                        print(enemy.tag);
+                    }
                 }
-                else{
-                    print(enemy.tag);
+            }
+            if (key){
+                keyImg.CrossFadeAlpha(1,0.2f,false);
+            }
+            else{
+                keyImg.CrossFadeAlpha(0.3f,0.2f,false);
+            }
+            if(Input.GetKey(KeyCode.Escape)){
+                coins=0;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                if(SceneManager.GetActiveScene().name=="L1"){
+                    gunActive=false;
                 }
             }
-        }
-        if (key){
-            keyImg.CrossFadeAlpha(1,0.2f,false);
-        }
-        else{
-            keyImg.CrossFadeAlpha(0.3f,0.2f,false);
-        }
-        if(Input.GetKey(KeyCode.Escape)){
-            coins=0;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            if(SceneManager.GetActiveScene().name=="L1"){
-                gunActive=false;
+
+            if (Input.GetKey(KeyCode.Backspace))
+            {
+                Application.Quit();
+            }
+
+            before.text = coins.ToString();
+            print(coinTotal+ " coins");
+            currentTime+=Time.deltaTime;
+            if(levelName!=SceneManager.GetActiveScene().name){
+                if(SceneManager.GetActiveScene().name!="L1"){
+                    audio_source.PlayOneShot(level_up);
+                }
+                levelName=SceneManager.GetActiveScene().name;
             }
         }
-
-        if (Input.GetKey(KeyCode.Backspace))
-        {
-            Application.Quit();
-        }
-
-        before.text = coins.ToString();
-        print(coinTotal+ " coins");
-        currentTime+=Time.deltaTime;
-        if(levelName!=SceneManager.GetActiveScene().name){
-            if(SceneManager.GetActiveScene().name!="L1"){
-                audio_source.PlayOneShot(level_up);
-            }
-            levelName=SceneManager.GetActiveScene().name;
-        }
-        
     }
 
     private void FixedUpdate()
     {
-        
-        if(gunActive){
-            reticle.enabled=true;
-            RaycastHit hit;
-            if (Physics.Raycast(camTrans.position, camTrans.forward, out hit, raycastDist) &&
-                (hit.collider.CompareTag("Target") || hit.collider.CompareTag("Monster")))
-            {
-                    reticle.color = Color.red;
+        if(SceneManager.GetActiveScene().name != "EndScreen"){
+            if(gunActive){
+                reticle.enabled=true;
+                RaycastHit hit;
+                if (Physics.Raycast(camTrans.position, camTrans.forward, out hit, raycastDist) &&
+                    (hit.collider.CompareTag("Target") || hit.collider.CompareTag("Monster")))
+                {
+                        reticle.color = Color.red;
+                }else{
+                    reticle.color = Color.white;
+                }
             }else{
-                reticle.color = Color.white;
+                reticle.enabled=false;
             }
-        }else{
-            reticle.enabled=false;
+            triggered = false;
         }
-        triggered = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -192,7 +195,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Endscreen()
     {
-        coinsCollected.text = "Coins Collected: " + coinTotal;
+        coinsCollected.text = "Coins Collected: " + coinTotal+"/"+"31";
         if (gunActive)
         {
             gameMode.text = "Gun Run";
