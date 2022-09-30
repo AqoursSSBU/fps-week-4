@@ -99,6 +99,12 @@ public class PlayerAttack : MonoBehaviour
                 gunActive=false;
             }
         }
+
+        if (Input.GetKey(KeyCode.Backspace))
+        {
+            Application.Quit();
+        }
+
         before.text = coins.ToString();
         print(coinTotal+ " coins");
         currentTime+=Time.deltaTime;
