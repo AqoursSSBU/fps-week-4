@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class PlayerAttack : MonoBehaviour
     public int coins=0;
     public static int coinTotal;
     public int coinLevelTotal;
+    public TextMeshProUGUI coinsCollected;
+    public TextMeshProUGUI gameMode;
     
     public TMPro.TextMeshProUGUI before;
     public TMPro.TextMeshProUGUI after;
@@ -38,6 +41,11 @@ public class PlayerAttack : MonoBehaviour
             gunActive=false;
             coinTotal=0;
             levelName="L1";
+        }
+
+        if(SceneManager.GetActiveScene().name == "EndScreen")
+        {
+            Endscreen();
         }
 
         audio_source = GetComponent<AudioSource>();
@@ -161,5 +169,18 @@ public class PlayerAttack : MonoBehaviour
                 break;
         }
 
+    }
+
+    void Endscreen()
+    {
+        coinsCollected.text = "Coins Collected: " + coinTotal;
+        if (gunActive)
+        {
+            gameMode.text = "Gun Run";
+        }
+        else
+        {
+            gameMode.text = "No Gun Run";
+        }
     }
 }
