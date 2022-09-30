@@ -30,6 +30,7 @@ public class PlayerAttack : MonoBehaviour
     public TMPro.TextMeshProUGUI after;
 
     public bool triggered = false;
+    int hp_hit_count = 0;
 
     private void Start() {
         if(SceneManager.GetActiveScene().name=="L1"){
@@ -138,9 +139,14 @@ public class PlayerAttack : MonoBehaviour
                 }
                 break;
             case "Monster":
-                print("here");
                 coins=0;
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                hp_hit_count += 1;
+                print("hit a zombie");
+                print(hp_hit_count);
+                if (hp_hit_count == 4)
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                }
                 if(SceneManager.GetActiveScene().name=="L1"){
                     gunActive=false;
                 }
